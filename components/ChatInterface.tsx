@@ -32,6 +32,35 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
     }
   }, [messages, isTyping, errorMessage]);
 
+  // --- 核心修复：通用筛选逻辑 ---
+  // 无论 API 返回多少个，强制处理成 2 个展示对象
+  const processCandidatesToFixedCount = (allProducts: Product[], apiCandidateIds: string[] | undefined): Product[] => {
+    const TARGET_COUNT = 2;
+    const safeIds = Array.isArray(apiCandidateIds) ? apiCandidateIds : [];
+    
+    // 1. 先找出 API 推荐的有效产品
+    let selection = allProducts.filter(p => safeIds.includes(p.id));
+
+    // 2. 如果数量不足 2 个，用评分最高的其他产品补齐
+    if (selection.length < TARGET_COUNT) {
+      const selectedIds = new Set(selection.map(p => p.id));
+      const remaining = allProducts
+        .filter(p => !selectedIds.has(p.id))
+        .sort((a, b) => b.rating - a.rating); // 按评分降序
+      
+      const needed = TARGET_COUNT - selection.length;
+      selection = [...selection, ...remaining.slice(0, needed)];
+    }
+
+    // 3. 如果数量超过 2 个，按评分降序截取前 2 个
+    if (selection.length > TARGET_COUNT) {
+      selection.sort((a, b) => b.rating - a.rating);
+      selection = selection.slice(0, TARGET_COUNT);
+    }
+
+    return selection;
+  };
+
   const handleSend = async () => {
     const input = inputValue.trim();
     if (!input || isTyping) return;
@@ -58,32 +87,17 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
     // 逻辑 A：匹配任务指令（展示筛选后的结构化对比）
     // ==========================================
     if (input === task.instruction) {
-      // 调用 API 进行智能筛选
       const result = await getHotelRecommendation(input, task.products, task.instruction, task.objectCount);
       
-      // 安全获取候选ID列表 (关键修复：防止 undefined 报错)
-      const safeCandidateIds = (result && Array.isArray(result.candidates)) ? result.candidates : [];
-      
-      // 根据 ID 过滤商品
-      let candidates = task.products.filter(p => safeCandidateIds.includes(p.id));
-      
-      // 兜底逻辑：如果 API 没返回有效 ID，或者筛选结果为空，则默认取评分最高的 2 个
-      if (candidates.length === 0) {
-         // console.warn("API did not return valid candidates, using fallback.");
-         candidates = [...task.products].sort((a, b) => b.rating - a.rating).slice(0, 2);
-      }
-
-      // 数量限制：最多只展示 2 个对象
-      if (candidates.length > 2) {
-         candidates = candidates.slice(0, 2);
-      }
+      // 使用通用函数处理 candidates，强制锁定为 2 个
+      const finalCandidates = processCandidatesToFixedCount(task.products, result?.candidates);
 
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: `根据您的具体要求（${task.reminder}），我为您筛选了 ${candidates.length} 款最符合条件的方案。请查看以下详细参数对比：`,
-        suggestedProducts: candidates,
-        isFullComparison: true // 保持使用大卡片详细视图
+        content: `根据您的具体要求（${task.reminder}），我为您精选了 2 款最符合条件的方案。请查看以下详细参数对比：`,
+        suggestedProducts: finalCandidates,
+        isFullComparison: true
       };
       setMessages(prev => [...prev, aiMessage]);
       setIsTyping(false);
@@ -116,16 +130,15 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
     // ==========================================
     const result = await getHotelRecommendation(input, task.products, task.instruction, task.objectCount);
     
-    // 安全获取候选ID列表
-    const safeCandidateIds = (result && Array.isArray(result.candidates)) ? result.candidates : [];
-    let candidates = task.products.filter(p => safeCandidateIds.includes(p.id));
+    // 修复点：即使是普通对话，也强制使用通用函数限制为 2 个
+    const finalCandidates = processCandidatesToFixedCount(task.products, result?.candidates);
     
     if (result && !result.error) {
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: result.analysis || "根据您的需求，以下是推荐结果：",
-        suggestedProducts: candidates,
+        content: result.analysis || "根据您的需求，以下是为您筛选的 2 个最佳选项：",
+        suggestedProducts: finalCandidates,
         recommendationId: result.recommendationId,
         analysis: result.recommendationSlogan,
         isFullComparison: false
