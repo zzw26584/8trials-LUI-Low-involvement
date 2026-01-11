@@ -27,8 +27,9 @@ export const getHotelRecommendation = async (
         分析与回复规则：
         1. 开场白限制：回复的 analysis 字段必须以“我在平台上比较了 ${objectCount} 款[商品类别]”作为第一句话。
         2. 严禁引用 ID：在 analysis 自然语言中，禁止出现任何内部 ID（如 d1_0）。请统一使用商品的完整名称。
-        3. 推荐结论：在 recommendationId 中锁定最符合权衡结果的一个 ID。
-        4. 输出格式：仅输出 JSON，不要 Markdown。`,
+        3. 候选 ID 返回：candidates 数组中必须只包含 input products 中的 id 字符串 (例如 'd1_0')，不要编造 ID。
+        4. 推荐结论：在 recommendationId 中锁定最符合权衡结果的一个 ID。
+        5. 输出格式：仅输出 JSON，不要 Markdown。`,
         responseMimeType: "application/json",
         responseSchema: {
           type: Type.OBJECT,

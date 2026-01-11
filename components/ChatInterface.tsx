@@ -55,16 +55,35 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
     setIsTyping(true);
 
     // ==========================================
-    // 逻辑 A：匹配任务指令（展示全量结构化信息）
+    // 逻辑 A：匹配任务指令（展示筛选后的结构化对比）
     // ==========================================
     if (input === task.instruction) {
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // 调用 API 进行智能筛选
+      const result = await getHotelRecommendation(input, task.products, task.instruction, task.objectCount);
+      
+      // 安全获取候选ID列表 (关键修复：防止 undefined 报错)
+      const safeCandidateIds = (result && Array.isArray(result.candidates)) ? result.candidates : [];
+      
+      // 根据 ID 过滤商品
+      let candidates = task.products.filter(p => safeCandidateIds.includes(p.id));
+      
+      // 兜底逻辑：如果 API 没返回有效 ID，或者筛选结果为空，则默认取评分最高的 2 个
+      if (candidates.length === 0) {
+         // console.warn("API did not return valid candidates, using fallback.");
+         candidates = [...task.products].sort((a, b) => b.rating - a.rating).slice(0, 2);
+      }
+
+      // 数量限制：最多只展示 2 个对象
+      if (candidates.length > 2) {
+         candidates = candidates.slice(0, 2);
+      }
+
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: `好的，我已经为您整理了当前任务下所有 ${task.products.length} 款备选方案的详细信息，请您进行对比分析：`,
-        suggestedProducts: task.products,
-        isFullComparison: true
+        content: `根据您的具体要求（${task.reminder}），我为您筛选了 ${candidates.length} 款最符合条件的方案。请查看以下详细参数对比：`,
+        suggestedProducts: candidates,
+        isFullComparison: true // 保持使用大卡片详细视图
       };
       setMessages(prev => [...prev, aiMessage]);
       setIsTyping(false);
@@ -93,16 +112,19 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
     }
 
     // ==========================================
-    // 逻辑 C：正常调用 Gemini API
+    // 逻辑 C：正常调用 Gemini API (普通对话模式)
     // ==========================================
     const result = await getHotelRecommendation(input, task.products, task.instruction, task.objectCount);
     
+    // 安全获取候选ID列表
+    const safeCandidateIds = (result && Array.isArray(result.candidates)) ? result.candidates : [];
+    let candidates = task.products.filter(p => safeCandidateIds.includes(p.id));
+    
     if (result && !result.error) {
-      const candidates = task.products.filter(p => result.candidates.includes(p.id));
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: result.analysis,
+        content: result.analysis || "根据您的需求，以下是推荐结果：",
         suggestedProducts: candidates,
         recommendationId: result.recommendationId,
         analysis: result.recommendationSlogan,
@@ -163,7 +185,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
             <div className={`max-w-[95%] ${msg.role === 'user' ? 'bg-blue-600 text-white rounded-2xl rounded-tr-none' : 'bg-white border border-gray-100 rounded-2xl rounded-tl-none'} p-5 shadow-sm`}>
               <div className="text-sm leading-relaxed whitespace-pre-wrap">{msg.content}</div>
               
-              {/* 模式一：结构化全量对比视图 */}
+              {/* 模式一：结构化全量对比视图（现已改为筛选后对比视图） */}
               {msg.isFullComparison && msg.suggestedProducts && (
                 <div className="mt-8 space-y-12">
                   {msg.suggestedProducts.map((product, pIdx) => (
