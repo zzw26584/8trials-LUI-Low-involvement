@@ -33,29 +33,49 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
   }, [messages, isTyping, errorMessage]);
 
   // --- 核心修复：通用筛选逻辑 ---
-  // 无论 API 返回多少个，强制处理成 2 个展示对象
-  const processCandidatesToFixedCount = (allProducts: Product[], apiCandidateIds: string[] | undefined): Product[] => {
+  // 逻辑变更：优先信任 AI 的排序 (Best, Second Best)，而不是单纯按 rating 排序
+  const processCandidatesToFixedCount = (
+    allProducts: Product[], 
+    apiCandidateIds: string[] | undefined, 
+    recommendationId?: string
+  ): Product[] => {
     const TARGET_COUNT = 2;
-    const safeIds = Array.isArray(apiCandidateIds) ? apiCandidateIds : [];
-    
-    // 1. 先找出 API 推荐的有效产品
-    let selection = allProducts.filter(p => safeIds.includes(p.id));
+    // 复制一份 ID 列表以避免修改原数组
+    let safeCandidateIds = Array.isArray(apiCandidateIds) ? [...apiCandidateIds] : [];
 
-    // 2. 如果数量不足 2 个，用评分最高的其他产品补齐
+    // 1. 构建有序 ID 列表：确保 recommendationId 绝对在第一位
+    if (recommendationId) {
+      // 先移除列表里可能存在的重复项
+      safeCandidateIds = safeCandidateIds.filter(id => id !== recommendationId);
+      // 将最佳推荐插到最前面
+      safeCandidateIds.unshift(recommendationId);
+    }
+    
+    // 2. 根据有序 ID 提取产品对象
+    // 这一步保留了 AI 给出的顺序 (即：Candidates[0] 是 Best, Candidates[1] 是 Second Best)
+    let selection: Product[] = [];
+    safeCandidateIds.forEach(id => {
+      const p = allProducts.find(prod => prod.id === id);
+      if (p && !selection.some(s => s.id === p.id)) {
+        selection.push(p);
+      }
+    });
+
+    // 3. 如果 AI 返回的数量超过 2 个，直接截取前 2 个
+    // 关键点：这里不再进行 rating 排序，避免把 AI 认为合适但评分低的产品(比如性价比高的)给筛掉
+    if (selection.length > TARGET_COUNT) {
+      selection = selection.slice(0, TARGET_COUNT);
+    }
+
+    // 4. 仅当数量不足 2 个时，才使用评分最高的剩余产品进行补位
     if (selection.length < TARGET_COUNT) {
       const selectedIds = new Set(selection.map(p => p.id));
       const remaining = allProducts
         .filter(p => !selectedIds.has(p.id))
-        .sort((a, b) => b.rating - a.rating); // 按评分降序
+        .sort((a, b) => b.rating - a.rating); // 补位逻辑依然可以用 rating
       
       const needed = TARGET_COUNT - selection.length;
       selection = [...selection, ...remaining.slice(0, needed)];
-    }
-
-    // 3. 如果数量超过 2 个，按评分降序截取前 2 个
-    if (selection.length > TARGET_COUNT) {
-      selection.sort((a, b) => b.rating - a.rating);
-      selection = selection.slice(0, TARGET_COUNT);
     }
 
     return selection;
@@ -89,8 +109,12 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
     if (input === task.instruction) {
       const result = await getHotelRecommendation(input, task.products, task.instruction, task.objectCount);
       
-      // 使用通用函数处理 candidates，强制锁定为 2 个
-      const finalCandidates = processCandidatesToFixedCount(task.products, result?.candidates);
+      // 传入 result.recommendationId 确保最佳选项被锁定在第一位
+      const finalCandidates = processCandidatesToFixedCount(
+        task.products, 
+        result?.candidates, 
+        result?.recommendationId
+      );
 
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -130,8 +154,12 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
     // ==========================================
     const result = await getHotelRecommendation(input, task.products, task.instruction, task.objectCount);
     
-    // 修复点：即使是普通对话，也强制使用通用函数限制为 2 个
-    const finalCandidates = processCandidatesToFixedCount(task.products, result?.candidates);
+    // 传入 result.recommendationId 确保最佳选项被锁定在第一位
+    const finalCandidates = processCandidatesToFixedCount(
+      task.products, 
+      result?.candidates, 
+      result?.recommendationId
+    );
     
     if (result && !result.error) {
       const aiMessage: Message = {
@@ -198,7 +226,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
             <div className={`max-w-[95%] ${msg.role === 'user' ? 'bg-blue-600 text-white rounded-2xl rounded-tr-none' : 'bg-white border border-gray-100 rounded-2xl rounded-tl-none'} p-5 shadow-sm`}>
               <div className="text-sm leading-relaxed whitespace-pre-wrap">{msg.content}</div>
               
-              {/* 模式一：结构化全量对比视图（现已改为筛选后对比视图） */}
+              {/* 模式一：筛选后对比视图 (Logic A) */}
               {msg.isFullComparison && msg.suggestedProducts && (
                 <div className="mt-8 space-y-12">
                   {msg.suggestedProducts.map((product, pIdx) => (
@@ -208,6 +236,9 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
                           {pIdx + 1}
                         </div>
                         <h4 className="text-lg font-black text-gray-800">{product.name}</h4>
+                        {pIdx === 0 && (
+                           <span className="bg-orange-100 text-orange-600 text-[10px] px-2 py-0.5 rounded-full font-bold">最佳推荐</span>
+                        )}
                       </div>
                       
                       <div className="rounded-2xl overflow-hidden border border-gray-100 shadow-inner bg-gray-50">
@@ -254,7 +285,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
                 </div>
               )}
 
-              {/* 模式二：常规 AI 推荐视图 */}
+              {/* 模式二：常规 AI 推荐视图 (Logic C) */}
               {!msg.isFullComparison && msg.suggestedProducts && msg.suggestedProducts.length > 0 && (
                 <div className="mt-6 space-y-4">
                   <div className="flex items-center gap-2">
