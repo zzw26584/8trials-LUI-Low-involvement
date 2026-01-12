@@ -20,7 +20,7 @@ export const TRIALS: TrialTask[] = [
     reminder: "抽绳，黑色，>150只。",
     products: [
       { id: 'e2_1', name: '加厚垃圾袋 A', price: 9.9, rating: 4.0, imageUrl: 'https://images.pexels.com/photos/3962260/pexels-photo-3962260.jpeg', summary: '常规平口型。', attributes: [{ label: '封口', value: '平口' }, { label: '颜色', value: '黑色' }, { label: '数量', value: '150只' }] },
-      { id: 'e2_2', name: '加厚垃圾袋 B', price: 15.0, rating: 4.4, imageUrl: 'https://images.pexels.com/photos/3962260/pexels-photo-3962260.jpeg', summary: '色彩斑斓。', attributes: [{ label: '封口', value: '抽绳' }, { label: '颜色', value: '黑色' }, { label: '数量', value: '120只' }] },
+      { id: 'e2_2', name: '加厚垃圾袋 B', price: 15.0, rating: 4.4, imageUrl: 'https://images.pexels.com/photos/3962260/pexels-photo-3962260.jpeg', summary: '色彩简洁。', attributes: [{ label: '封口', value: '抽绳' }, { label: '颜色', value: '黑色' }, { label: '数量', value: '120只' }] },
       { id: 'e2_3', name: '加厚垃圾袋 C', price: 12.9, rating: 4.5, imageUrl: 'https://images.pexels.com/photos/3962260/pexels-photo-3962260.jpeg', summary: '承重力强，不脏手。', attributes: [{ label: '封口', value: '抽绳' }, { label: '颜色', value: '黑色' }, { label: '数量', value: '100只' }] },
       { id: 'e2_4', name: '加厚垃圾袋 D', price: 18.0, rating: 4.2, imageUrl: 'https://images.pexels.com/photos/3962260/pexels-photo-3962260.jpeg', summary: '商用超大号。', attributes: [{ label: '封口', value: '背心式' }, { label: '颜色', value: '黑色' }, { label: '数量', value: '160只' }] },
       { id: 'e2_5', name: '加厚垃圾袋 E', price: 11.5, rating: 4.1, imageUrl: 'https://images.pexels.com/photos/3962260/pexels-photo-3962260.jpeg', summary: '环保材质。', attributes: [{ label: '封口', value: '抽绳' }, { label: '颜色', value: '黑色' }, { label: '数量', value: '150只' }] }
