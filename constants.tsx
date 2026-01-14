@@ -3,111 +3,87 @@ import { TrialTask } from './types';
 
 export const TRIALS: TrialTask[] = [
   {
-    id: 1,
-    type: 'GADGET',
-    objectCount: 2,
-    dimensionCount: 3,
-    instruction: "你打算买一辆竞速公路自行车。请选择铝合金车架、必须搭配Shimano 105以上套件、价格在20000-28900元的竞速自行车。",
-    reminder: "铝合金，Shimano 105+套件，2-2.89万。",
+    id: 1, type: 'FOOD', objectCount: 5, dimensionCount: 3,
+    instruction: "假设你最近家里的洗发水快用完了，你打算在网上买一袋补充装。你希望找一款价格不到50元、薄荷香味、2L超大容量的洗发水。",
+    reminder: "洗发水，<50元，薄荷味，2L",
     products: [
-      { id: 'bk1_1', name: 'Giant TCR', price: 22800, rating: 4.9, imageUrl: 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=400', summary: '几何平衡，爬坡神器', attributes: [{ label: '材质', value: '碳纤维' }, { label: '套件', value: 'Shimano 105' }] },
-      { id: 'bk1_2', name: 'Specialized Allez', price: 26500, rating: 4.5, imageUrl: 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=400', summary: '气动造型，巡航稳定', attributes: [{ label: '材质', value: '铝合金' }, { label: '套件', value: 'Shimano 105' }] }
+       { id: 'd1_0', name: '清爽洗发水 A', price: 59.9, rating: 4.2, imageUrl: 'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?w=200', summary: '超市热销款，全家适用。', attributes: [{ label: '香味', value: '柠檬' }, { label: '容量', value: '2L' },{ label: '价格', value: '59.9' }] },
+      { id: 'd1_1', name: '清爽洗发水 B', price: 45.0, rating: 4.3, imageUrl: 'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?w=200', summary: '经典配方，柔顺亮泽。', attributes: [{ label: '香味', value: '薄荷' }, { label: '容量', value: '1L' },{ label: '价格', value: '45.0' }] },
+      { id: 'd1_2', name: '清爽洗发水 C', price: 39.9, rating: 4.5, imageUrl: 'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?w=200', summary: '深层清洁，酷爽体验。', attributes: [{ label: '香味', value: '薄荷' }, { label: '容量', value: '2L' },{ label: '价格', value: '39.9' }] },
+      { id: 'd1_3', name: '清爽洗发水 D', price: 55.0, rating: 4.1, imageUrl: 'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?w=200', summary: '草本精华，呵护头皮。', attributes: [{ label: '香味', value: '生姜' }, { label: '容量', value: '750ml' }, { label: '价格', value: '55.0' }] },
+      { id: 'd1_4', name: '清爽洗发水 E', price: 49.9, rating: 4.4, imageUrl: 'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?w=200', summary: '沙龙级品质。', attributes: [{ label: '香味', value: '无香' }, { label: '容量', value: '2L' }, { label: '价格', value: '49.9' }] }
     ]
   },
   {
-    id: 2,
-    type: 'EDUCATION',
-    objectCount: 2,
-    dimensionCount: 3,
-    instruction: "你正在寻求职业转型，该职业需要有较高的英文水平。你准备报考一项昂贵的雅思培训。这项投资关乎你未来 10 年的职业薪资。请选择价格6万左右、学员通过率高于 85%、并提供行业认可证书的课程。",
-    reminder: "价格6万左右，>85%通过率，含行业认可证书。",
+    id: 2, type: 'DAILY', objectCount: 5, dimensionCount: 3,
+    instruction: "假设你正打算买一箱洗衣液放在家里备用。你希望能选购一款价格在60元以内、具备专业除菌功能，并能在5日内送达的产品",
+    reminder: "<60元，除菌，5日达。",
     products: [
-      { id: 'e1', name: 'Udacity 架构师', price: 62800, rating: 4.9, imageUrl: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400', summary: '国际讲师，口音地道', attributes: [{ label: '通过率', value: '88%' }, { label: '认可度', value: '行业认可' }] },
-      { id: 'e2', name: '国内机构 训练营', price: 63000, rating: 4.8, imageUrl: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400', summary: '全英文讲解，1对1辅导', attributes: [{ label: '通过率', value: '83%' }, { label: '认可度', value: '行业认可' }] }
+      { id: 'd17_0', name: '洁净洗衣液 A', price: 65.0, rating: 4.5, imageUrl: 'https://images.unsplash.com/photo-1610557892470-55d9e80c0bce?w=200', summary: '强力去渍，呵护衣物。', attributes: [{ label: '功能', value: '含除菌' }, { label: '时效', value: '2天' }, { label: '价格', value: '65.0' }] },
+      { id: 'd17_1', name: '洁净洗衣液 B', price: 58.0, rating: 4.2, imageUrl: 'https://images.unsplash.com/photo-1610557892470-55d9e80c0bce?w=200', summary: '清新花香，柔顺如新。', attributes: [{ label: '功能', value: '普通' }, { label: '时效', value: '3天' }, { label: '价格', value: '58.0' }] },
+      { id: 'd17_2', name: '洁净洗衣液 C', price: 49.9, rating: 4.4, imageUrl: 'https://images.unsplash.com/photo-1610557892470-55d9e80c0bce?w=200', summary: '实惠之选，居家必备。', attributes: [{ label: '功能', value: '除螨' }, { label: '时效', value: '6天' }, { label: '价格', value: '49.9' }] },
+      { id: 'd17_3', name: '洁净洗衣液 D', price: 72.0, rating: 4.6, imageUrl: 'https://images.unsplash.com/photo-1610557892470-55d9e80c0bce?w=200', summary: '亮白护色配方。', attributes: [{ label: '功能', value: '除菌' }, { label: '时效', value: '4天' }, { label: '价格', value: '72.0' }] },
+      { id: 'd17_4', name: '洁净洗衣液 E', price: 48.0, rating: 4.6, imageUrl: 'https://images.unsplash.com/photo-1610557892470-55d9e80c0bce?w=200', summary: '自然洁净，安心之选。', attributes: [{ label: '功能', value: '含除菌' }, { label: '时效', value: '3天' }, { label: '价格', value: '48.0' }] }
     ]
   },
   {
-    id: 3,
-    type: 'GIFT',
-    objectCount: 3,
-    dimensionCount: 3,
-    instruction: "假如马上快要过年了，你想给自己的老师买一个新年礼物，你的老师非常喜欢喝咖啡。请选择价格在800-1000元、浅度烘培、为花果风味的咖啡豆。",
-    reminder: "800-1000元，浅烘，花果风味。",
+    id: 3, type: 'DAILY', objectCount: 4, dimensionCount: 3,
+    instruction: "假设你刚买新手机，想挑选一个耐用的手机壳。你希望这款壳子价格低于30元、材质必须是柔软的硅胶、用户评价里要明确提到无异味。",
+    reminder: "手机壳，<30元，硅胶，无异味。",
     products: [
-      { id: 'g1', name: '皮爷 Peets', price: 858, rating: 4.9, imageUrl: 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=400', summary: '迪克森上校，浓烈烟草香', attributes: [{ label: '烘培', value: '浅度' }, { label: '风味', value: '坚果' }] },
-      { id: 'g2', name: '星巴克 臻选', price: 888, rating: 4.5, imageUrl: 'https://images.unsplash.com/photo-1580915411954-282cb1b0d780?w=400', summary: '单一产区，黑巧克力风味', attributes: [{ label: '烘培', value: '中度' }, { label: '风味', value: '花果' }] },
-      { id: 'g3', name: 'Blue Bottle', price: 980, rating: 4.8, imageUrl: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400', summary: '极客最爱，新鲜烘焙', attributes: [{ label: '烘培', value: '浅度' }, { label: '风味', value: '花果' }] }
+      { id: 'd2_0', name: '手机壳 A', price: 15.0, rating: 4.1, imageUrl: 'https://images.pexels.com/photos/14833708/pexels-photo-14833708.jpeg', summary: '极致轻薄。', attributes: [{ label: '材质', value: '硬塑料' }, { label: '评价', value: '无异味' }, { label: '单价', value: '15.0' }] },
+      { id: 'd2_1', name: '手机壳 B', price: 19.9, rating: 4.4, imageUrl: 'https://images.pexels.com/photos/14833708/pexels-photo-14833708.jpeg', summary: '手感舒适，全包防摔。', attributes: [{ label: '材质', value: '硅胶' }, { label: '评价', value: '无异味' }, { label: '单价', value: '19.9' }] },
+      { id: 'd2_2', name: '手机壳 C', price: 35.0, rating: 4.5, imageUrl: 'https://images.pexels.com/photos/14833708/pexels-photo-14833708.jpeg', summary: '真皮质感。', attributes: [{ label: '材质', value: '皮革' }, { label: '评价', value: '味道极重' }, { label: '单价', value: '35.0' }] },
+      { id: 'd2_3', name: '手机壳 D', price: 28.0, rating: 4.2, imageUrl: 'https://images.pexels.com/photos/14833708/pexels-photo-14833708.jpeg', summary: '透明防发黄。', attributes: [{ label: '材质', value: '硅胶' }, { label: '评价', value: '略有味道' },{ label: '单价', value: '28.0' }] }
     ]
   },
   {
-    id: 4,
-    type: 'GADGET',
-    objectCount: 3,
-    dimensionCount: 3,
-    instruction: "假如你选一家意式咖啡机。请选择半自动、压力稳定在15bar以上、价格在8000-10000元的咖啡机。",
-    reminder: "压力15bar+，半自动，价格8k-10k。",
+    id: 4, type: 'DAILY', objectCount: 4, dimensionCount: 3,
+    instruction: "假设你准备去超市买几罐午餐肉作为家里的常备存货。你希望选购一款淀粉含量较低、单价在30元以内、单罐净含量>340g的产品。",
+    reminder: "午餐肉，低淀粉，<30元，单罐净含量>340g",
     products: [
-      { id: 'cf4_1', name: 'Breville 920', price: 9500, rating: 4.9, imageUrl: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=400', summary: '精准温控，商用级萃取', attributes: [{ label: '压力', value: '15bar' }, { label: '自动', value: '全自动' }] },
-      { id: 'cf4_2', name: '德龙 EC9155', price: 6999, rating: 4.8, imageUrl: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=400', summary: '全自动一体，简单操作', attributes: [{ label: '压力', value: '19bar' }, { label: '自动', value: '半自动' }] },
-      { id: 'cf4_3', name: '惠家 KD-310', price: 8200, rating: 4.6, imageUrl: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=400', summary: '三加热块系统，极速加热', attributes: [{ label: '压力', value: '15bar' }, { label: '锅炉', value: '半自动' }] }
+      { id: 'd18_0', name: '经典午餐肉 A', price: 35.0, rating: 4.6, imageUrl: 'https://images.pexels.com/photos/5491290/pexels-photo-5491290.jpeg', summary: '高肉含量，真材实料。', attributes: [{ label: '淀粉', value: '极低' },  { label: '重量', value: '242g' }, { label: '价格', value: '35.0' }] },
+      { id: 'd18_1', name: '经典午餐肉 B', price: 22.0, rating: 4.0, imageUrl: 'https://images.pexels.com/photos/5491290/pexels-photo-5491290.jpeg', summary: '实惠家庭装。', attributes: [{ label: '淀粉', value: '中等' },{ label: '重量', value: '198g' }, { label: '价格', value: '22.0' }] },
+      { id: 'd18_2', name: '经典午餐肉 C', price: 29.0, rating: 4.3, imageUrl: 'https://images.pexels.com/photos/5491290/pexels-photo-5491290.jpeg', summary: '火锅必备。', attributes: [{ label: '淀粉', value: '低' }, { label: '重量', value: '349g' }, { label: '价格', value: '39.0' }] },
+      { id: 'd18_3', name: '经典午餐肉 D', price: 25.0, rating: 4.4, imageUrl: 'https://images.pexels.com/photos/5491290/pexels-photo-5491290.jpeg', summary: '肉质紧实，开盖即食。', attributes: [{ label: '淀粉', value: '极低' }, { label: '重量', value: '346g' }, { label: '价格', value: '25.0' }] }
     ]
   },
   {
-    id: 5,
-    type: 'PHONE',
-    objectCount: 4,
-    dimensionCount: 3,
-    instruction: "假如你现在在选一个新手机，选择一个价格在3000-5000元范围内、内存≥512G，颜色为黑色的手机。",
-    reminder: "3000-5000元，内存≥512G，黑色。",
+    id: 5, type: 'DAILY', objectCount: 3, dimensionCount: 3,
+    instruction: "假设你现在需要选购一袋抽纸巾放在办公室桌上。你只需要保证这款纸巾是完全无香味的，湿水不会皱且每包至少要有100抽。",
+    reminder: "无香味，100抽/包，湿水不会皱",
     products: [
-      { id: 'p1', name: '华为 Mate 50E', price: 3999, rating: 4.7, imageUrl: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400', summary: '昆仑玻璃，应急模式，信号强', attributes: [{ label: '内存', value: '256GB' }, { label: '颜色', value: '黑色' }] },
-      { id: 'p2', name: '小米 13', price: 3299, rating: 4.6, imageUrl: 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400', summary: '徕卡光学镜头，小屏手感佳', attributes: [{ label: '内存', value: '512GB' }, { label: '颜色', value: '白色' }] },
-      { id: 'p3', name: 'iPhone 13', price: 5699, rating: 4.8, imageUrl: 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400', summary: 'A15芯片，色彩还原真实', attributes: [{ label: '内存', value: '512GB' }, { label: '颜色', value: '黑色' }] },
-      { id: 'p4', name: '一加 11', price: 3899, rating: 4.5, imageUrl: 'https://images.unsplash.com/photo-1678911820864-e2c567c655d7?w=400', summary: '哈苏影像，顶级震感马达', attributes: [{ label: '内存', value: '1TB' }, { label: '颜色', value: '黑色' }] }
+      { id: 'd4_0', name: '原生木浆抽纸 A', price: 15.0, rating: 4.2, imageUrl: 'https://images.unsplash.com/photo-1610021684483-b06bf8ed5a41?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', summary: '便携装。', attributes: [{ label: '香味', value: '清香' }, { label: '规格', value: '40抽' }, { label: '是否湿水抗皱', value: '是' }] },
+      { id: 'd4_1', name: '原生木浆抽纸 B', price: 18.0, rating: 4.5, imageUrl: 'https://images.unsplash.com/photo-1610021684483-b06bf8ed5a41?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', summary: '薰衣草香。', attributes: [{ label: '香味', value: '花香' }, { label: '规格', value: '120抽' }, { label: '是否湿水抗皱', value: '是' }] },
+      { id: 'd4_2', name: '原生木浆抽纸 C', price: 12.0, rating: 4.1, imageUrl: 'https://images.unsplash.com/photo-1610021684483-b06bf8ed5a41?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', summary: '实惠之选。', attributes: [{ label: '香味', value: '无香味' }, { label: '规格', value: '80抽' }, { label: '是否湿水抗皱', value: '是' }] }
     ]
   },
   {
-    id: 6,
-    type: 'LAPTOP',
-    objectCount: 4,
-    dimensionCount: 3,
-    instruction: "假如你是大学电竞社社长，需要买一台极致性能的游戏本参加全国大赛。请选择价格25000左右、显卡必须是RTX 4080以上、屏幕刷新率必须超过320Hz的电脑。",
-    reminder: "2.5万左右，4080显卡，屏幕刷新率320Hz+。",
+    id: 6, type: 'DAILY', objectCount: 3, dimensionCount: 3,
+    instruction: "假设你需要买一盒酒精湿巾放在包里消毒。你只需要保证这款湿纸巾的酒精含量达到了有效的75%，且采用的是干净卫生的单片独立包装，价格在25元以下",
+    reminder: "75%酒精，独立包装，价格低于25元",
     products: [
-      { id: 'lp6_1', name: 'ROG 枪神7 P', price: 15999, rating: 4.9, imageUrl: 'https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=400', summary: '败家之眼，光效拉满', attributes: [{ label: '显卡', value: 'RTX 4080' }, { label: '刷新率', value: '240Hz' }] },
-      { id: 'lp6_2', name: '拯救者 Y9000P', price: 24500, rating: 4.8, imageUrl: 'https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=400', summary: '冰魄散热，满血性能', attributes: [{ label: '显卡', value: 'RTX 4080' }, { label: '刷新率', value: '120Hz' }] },
-      { id: 'lp6_3', name: '外星人 m18', price: 23999, rating: 5.0, imageUrl: 'https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=400', summary: '极致信仰，堆料机皇', attributes: [{ label: '显卡', value: 'RTX 4090' }, { label: '刷新率', value: '480Hz' }] },
-      { id: 'lp6_4', name: '暗影精灵 10', price: 31000, rating: 4.5, imageUrl: 'https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=400', summary: '主流大作通杀，高性价比', attributes: [{ label: '显卡', value: 'RTX 4070' }, { label: '刷新率', value: '165Hz' }] }
+      { id: 'd20_0', name: '消毒湿巾 A', price: 12.0, rating: 4.2, imageUrl: 'https://images.unsplash.com/photo-1734599397715-f030c6d206a0?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', summary: '温和不刺激。', attributes: [{ label: '酒精', value: '30%' }, { label: '包装', value: '独立包装' }] },
+      { id: 'd20_1', name: '消毒湿巾 B', price: 15.8, rating: 4.6, imageUrl: 'https://images.unsplash.com/photo-1734599397715-f030c6d206a0?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', summary: '有效杀菌，便携出行。', attributes: [{ label: '酒精', value: '75%' }, { label: '包装', value: '独立包装' }] },
+      { id: 'd20_2', name: '消毒湿巾 C', price: 18.0, rating: 4.5, imageUrl: 'https://images.unsplash.com/photo-1734599397715-f030c6d206a0?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', summary: '大桶分享。', attributes: [{ label: '酒精', value: '75%' }, { label: '包装', value: '抽取式' }] }
     ]
   },
   {
-    id: 7,
-    type: 'FINANCE',
-    objectCount: 5,
-    dimensionCount: 3,
-    instruction: "假如现在你计划为父母购置一份退休年金险。请选择收益率超过6.0%、起领年龄≥55岁、包含身故保险金评估的保险。",
-    reminder: "收益>6.0%，起领≥55岁，含身故评估。",
+    id: 7, type: 'DAILY', objectCount: 2, dimensionCount: 3,
+    instruction: "假设你打算买一个新的订书机放在书桌上。你希望能选购到一款商家直接赠送一整盒配套订书钉，且本身具备轻松按压的省力设计，价格低于20元的产品。",
+    reminder: "送订书钉，省力设计，价格低于20元。",
     products: [
-      { id: 'f1', name: '泰康 幸福年', price: 100000, rating: 4.7, imageUrl: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=400', summary: '养老社区权益，稳健收益', attributes: [{ label: '年化', value: '3.5%' }, { label: '起领', value: '60岁' }, { label: '身故金', value: '不含' }] },
-      { id: 'f2', name: '友邦 充裕', price: 100000, rating: 4.8, imageUrl: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=400', summary: '全球配置，美元收益', attributes: [{ label: '年化', value: '6.2%' }, { label: '起领', value: '65岁' }, { label: '身故金', value: '含' }] },
-      { id: 'f3', name: '平安 尊享', price: 100000, rating: 4.6, imageUrl: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=400', summary: '国民大品牌，理赔有保障', attributes: [{ label: '年化', value: '4.0%' }, { label: '起领', value: '60岁' }, { label: '身故金', value: '含' }] },
-      { id: 'f4', name: '人寿 鑫裕', price: 100000, rating: 4.5, imageUrl: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=400', summary: '国资背景，安全第一', attributes: [{ label: '年化', value: '6.5%' }, { label: '起领', value: '55岁' }, { label: '身故金', value: '含' }] },
-      { id: 'f5', name: '中宏 乐享', price: 100000, rating: 4.4, imageUrl: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=400', summary: '灵活支取，高流动性', attributes: [{ label: '年化', value: '7.1%' }, { label: '起领', value: '55岁' }, { label: '身故金', value: '不含' }] }
+      { id: 'd8_0', name: '得力订书机 A', price: 12.0, rating: 4.2, imageUrl: 'https://images.unsplash.com/photo-1541690161184-75cbc0386cd6?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', summary: '小巧迷你型。', attributes: [{ label: '赠品', value: '无' }, { label: '功能', value: '省力50%' }] },
+      { id: 'd8_1', name: '得力订书机 B', price: 15.0, rating: 4.7, imageUrl: 'https://images.unsplash.com/photo-1541690161184-75cbc0386cd6?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', summary: '重型装订。', attributes: [{ label: '赠品', value: '送1000枚钉' }, { label: '功能', value: '省力50%' }] }
     ]
   },
   {
-    id: 8,
-    type: 'EDUCATION',
-    objectCount: 5,
-    dimensionCount: 3,
-    instruction: "假如你准备利用晚间时间提升AI编程能力，现在需要选一个性价比最高的课程。请选择学费10000-20000元、通过率≥99%、提供行业认证证书。",
-    reminder: "1-2万学费，≥99%通过率，行业证书。",
+    id: 8, type: 'DAILY', objectCount: 2, dimensionCount: 3,
+    instruction: "假设你需要买一盒电池给家里的遥控器用。你只需要保证它们是质量稳定的5号碱性电池，且每盒要是划算的10粒装，价格低于15元。",
+    reminder: "5号碱性，10粒，价格低于25元。",
     products: [
-      { id: 'ed8_1', name: 'Coursera AI专项', price: 15000, rating: 4.9, imageUrl: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400', summary: '斯坦福教授，权威认证', attributes: [{ label: '通过率', value: '92%' }, { label: '证书', value: '行业证书' }] },
-      { id: 'ed8_2', name: 'Udemy 深度学习', price: 12000, rating: 4.7, imageUrl: 'https://images.unsplash.com/photo-1516321497487-e288fb19713f?w=400', summary: '实操为主，终身访问', attributes: [{ label: '通过率', value: '99%' }, { label: '证书', value: '内部证明' }] },
-      { id: 'ed8_3', name: '极客时间 训练营', price: 18000, rating: 4.8, imageUrl: 'https://images.unsplash.com/photo-1516321497487-e288fb19713f?w=400', summary: '大厂架构师，实战点评', attributes: [{ label: '通过率', value: '99%' }, { label: '证书', value: '行业证书' }] },
-      { id: 'ed8_4', name: '网易云课堂 进阶', price: 9000, rating: 4.3, imageUrl: 'https://images.unsplash.com/photo-1516321497487-e288fb19713f?w=400', summary: '零基础友好，配套练习', attributes: [{ label: '通过率', value: '78%' }, { label: '证书', value: '内部证书' }] },
-      { id: 'ed8_5', name: 'GitHub 原创课', price: 25000, rating: 4.9, imageUrl: 'https://images.unsplash.com/photo-1516321497487-e288fb19713f?w=400', summary: '开源社区项目，硬核代码', attributes: [{ label: '通过率', value: '99%' }, { label: '证书', value: '内部证明' }] }
+       { id: 'd24_0', name: '南孚电池 A', price: 15.0, rating: 4.2, imageUrl: 'https://images.pexels.com/photos/1084213/pexels-photo-1084213.jpeg', summary: '7号专属。', attributes: [{ label: '类型', value: '5号碱性' }, { label: '规格', value: '6粒装' }] },
+      { id: 'd24_1', name: '南孚电池 B', price: 19.9, rating: 4.9, imageUrl: 'https://images.pexels.com/photos/1084213/pexels-photo-1084213.jpeg', summary: '聚能环，电量持久。', attributes: [{ label: '类型', value: '5号碱性' }, { label: '规格', value: '10粒装' }] }
     ]
   }
 ];
