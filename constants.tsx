@@ -79,7 +79,7 @@ export const TRIALS: TrialTask[] = [
   },
   {
     id: 8, type: 'DAILY', objectCount: 2, dimensionCount: 3,
-    instruction: "假设你需要买一盒电池给家里的遥控器用。你只需要保证它们是质量稳定的5号碱性电池，且每盒要是划算的10粒装，价格低于15元。",
+    instruction: "假设你需要买一盒电池给家里的遥控器用。你只需要保证它们是质量稳定的5号碱性电池，且每盒要是划算的10粒装，价格低于25元。",
     reminder: "5号碱性，10粒，价格低于25元。",
     products: [
        { id: 'd24_0', name: '南孚电池 A', price: 15.0, rating: 4.2, imageUrl: 'https://images.pexels.com/photos/1084213/pexels-photo-1084213.jpeg', summary: '7号专属。', attributes: [{ label: '类型', value: '5号碱性' }, { label: '规格', value: '6粒装' }] },
